@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "./App.css";
+import axios from "axios";
 
 function App() {
   const [name, setName] = useState("");
@@ -7,8 +8,13 @@ function App() {
   const [people, setPeople] = useState([]);
 
   useEffect(() => {
-    console.log(people);
-  }, [people]);
+    // TODO: fetch data from mongodb using axios
+    const personsInDB = axios
+      .get("http://localhost:3001/api/persons")
+      .then((response) => {
+        setPeople(response.data);
+      });
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
