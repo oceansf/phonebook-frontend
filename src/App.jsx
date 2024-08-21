@@ -9,16 +9,18 @@ function App() {
 
   useEffect(() => {
     // TODO: fetch data from mongodb using axios
-    const personsInDB = axios
-      .get("http://localhost:3001/api/persons")
-      .then((response) => {
-        setPeople(response.data);
-      });
+    axios.get("http://localhost:3001/api/persons").then((response) => {
+      setPeople(response.data);
+    });
   }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setPeople([...people, { name, number }]);
+    axios.post("http://localhost:3001/api/persons", {
+      name,
+      number,
+    });
     setName("");
     setNumber("");
   };
