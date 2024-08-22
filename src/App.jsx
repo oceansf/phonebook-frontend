@@ -25,6 +25,18 @@ function App() {
     setNumber("");
   };
 
+  const handleDelete = (e) => {
+    axios
+      .delete(`http://localhost:3001/api/person/${e.target.id}`)
+      .then((response) => {
+        setPeople(
+          people.filter((p) => {
+            people.indexOf(p) !== e.target.id;
+          })
+        );
+      });
+  };
+
   return (
     <>
       <form onSubmit={handleSubmit} method="post">
@@ -60,9 +72,8 @@ function App() {
                 {person.name} {person.number}{" "}
                 <button
                   className="delete-btn"
-                  onClick={() => {
-                    setPeople(people.filter((p) => p.name !== person.name));
-                  }}
+                  id={person._id}
+                  onClick={handleDelete}
                 >
                   Delete
                 </button>
